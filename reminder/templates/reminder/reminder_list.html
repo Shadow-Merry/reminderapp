@@ -1,0 +1,30 @@
+{% extends 'reminder/main.html' %}
+
+{% block content %}
+<div class="container">
+{{ request.user }} <br/> <br/>
+<a class="btn btn-primary" href="{% url 'reminder:add' %}" role="button">Add Reminder</a> <br>
+<hr>
+<h1> Reminder List </h1> <hr>
+<div class="row row-cols-3">
+    {% for t in lists %}
+  
+{% if user.username == t.user.username  %}
+      <a href={{t.get_absolute_url}}>  <div class ="cd"> Reminde For: {{ t.title }} <br/> 
+     <small>  {% if t.status == True %}
+         Status: Expried
+        {% else %}
+         Status : Not Expried
+       
+       {% endif %} 
+       </small>
+       <hr>
+       <a class="btn btn-primary btn-block" href="{% url 'reminder:delete' t.id %}" role="button">Delete</a>
+    </div> </a>
+    {% endif %}
+    {% empty %}
+    <h3> you haven't sent any reminder </h3>
+    {% endfor %}
+</div>
+</div>
+{% endblock content %}
